@@ -1,0 +1,117 @@
+class Main {
+    static Field myField;
+    
+    function void main () {
+        var char key;
+        var boolean exit;
+        let exit = false;
+        let myField = Field.new();
+
+        do Main.GenerateField();
+        do myField.draw();
+
+        while(~exit){
+
+            while(key = 0) { let key = Keyboard.keyPressed(); }
+
+            if((key = 87) | (key = 65) | (key = 83) | (key = 68)) { do myField.move(key); } // WASD
+            if(key = 82){ // R
+                do myField.clearField();
+                do Main.GenerateField();
+                do myField.draw();
+            }
+            if(key = 81){ } // TODO: Q
+            if(key = 140) { let exit = true; } // ESC
+            
+            while(~(key=0)) { let key = Keyboard.keyPressed(); }
+        }
+        
+        return;
+    }
+
+    function int GetScreenLocation(int x, int y) { return y*16*32 + x; }
+
+    function void GenerateField(){
+        // Ща делаем стеночки
+        do myField.AddObject(1, 4, 1);
+        do myField.AddObject(2, 4, 1);
+        do myField.AddObject(3, 4, 1);
+        do myField.AddObject(4, 4, 1);
+        do myField.AddObject(5, 4, 1);
+        do myField.AddObject(6, 4, 1);
+        do myField.AddObject(7, 4, 1);
+        do myField.AddObject(8, 4, 1);
+        do myField.AddObject(9, 4, 1);
+        do myField.AddObject(9, 3, 1);
+        do myField.AddObject(9, 2, 1);
+
+        do myField.AddObject(10, 2, 1);
+        do myField.AddObject(11, 2, 1);
+        do myField.AddObject(12, 2, 1);
+        do myField.AddObject(13, 2, 1);
+        do myField.AddObject(14, 2, 1);
+
+        do myField.AddObject(14, 3, 1);
+        do myField.AddObject(14, 4, 1);
+        do myField.AddObject(14, 5, 1);
+        do myField.AddObject(14, 6, 1);
+        do myField.AddObject(14, 7, 1);
+        do myField.AddObject(14, 8, 1);
+        do myField.AddObject(14, 9, 1);
+        do myField.AddObject(14, 10, 1);
+
+        do myField.AddObject(13, 10, 1);
+        do myField.AddObject(12, 10, 1);
+
+        do myField.AddObject(12, 9, 1);
+
+        do myField.AddObject(11, 9, 1);
+        do myField.AddObject(10, 9, 1);
+
+        do myField.AddObject(10, 8, 1);
+        do myField.AddObject(10, 7, 1);
+
+        do myField.AddObject(9, 7, 1);
+        do myField.AddObject(8, 7, 1);
+
+        do myField.AddObject(8, 8, 1);
+        do myField.AddObject(8, 9, 1);
+        do myField.AddObject(8, 10, 1);
+
+        do myField.AddObject(7, 10, 1);
+        do myField.AddObject(6, 10, 1);
+        do myField.AddObject(5, 10, 1);
+        do myField.AddObject(4, 10, 1);
+        do myField.AddObject(3, 10, 1);
+        do myField.AddObject(2, 10, 1);
+        do myField.AddObject(1, 10, 1);
+
+        do myField.AddObject(1, 9, 1);
+        do myField.AddObject(1, 8, 1);
+        do myField.AddObject(1, 7, 1);
+        do myField.AddObject(1, 6, 1);
+        do myField.AddObject(1, 5, 1);
+
+        // Теперь боксы расставляем
+        do myField.AddObject(4, 7, 2);
+        do myField.AddObject(5, 7, 2);
+        do myField.AddObject(6, 7, 2);
+        do myField.AddObject(7, 7, 2);
+        do myField.AddObject(6, 6, 2);
+        do myField.AddObject(6, 8, 2);
+        do myField.AddObject(13, 4, 2);
+
+        // Теперь ставим нашего конченного героя, что собрался переносить коробки из комнаты в комнату
+        do myField.AddObject(2, 9, 3);   
+
+        // Теперь куда их надо перенести расставляем
+        do myField.AddObject(11, 7, 4);
+        do myField.AddObject(12, 7, 4);
+        do myField.AddObject(13, 7, 4);
+        do myField.AddObject(11, 8, 4);
+        do myField.AddObject(12, 8, 4);
+        do myField.AddObject(13, 8, 4);
+        do myField.AddObject(13, 9, 4);
+        return;
+    }
+}

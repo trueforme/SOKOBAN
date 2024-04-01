@@ -1,0 +1,69 @@
+function ExpectedBox.draw 2
+push argument 0
+push argument 1
+call Main.GetScreenLocation 2
+pop local 1
+push constant 16384
+push local 1
+add
+pop local 0
+push local 0
+push constant 4098
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 14343
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 5130
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push constant 3612
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push constant 1032
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push constant 1032
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push constant 3612
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push constant 5130
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push constant 14343
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 4098
+call Memory.poke 2
+pop temp 0
+push constant 0
+return

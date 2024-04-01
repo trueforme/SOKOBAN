@@ -1,0 +1,27 @@
+class Box {
+    function void draw(int x, int y){
+        var int memAddress;
+        var int location;
+        let location = Main.GetScreenLocation(x, y);
+	    let memAddress = 16384+location;
+
+        do Memory.poke(memAddress, -1);
+	    do Memory.poke(memAddress +32, -8185);
+	    do Memory.poke(memAddress +64, -4081);
+	    do Memory.poke(memAddress +96, -18403);
+	    do Memory.poke(memAddress +128, -25543);
+	    do Memory.poke(memAddress +160, -29071);
+	    do Memory.poke(memAddress +192, -30751);
+	    do Memory.poke(memAddress +224, -31807);
+	    do Memory.poke(memAddress +256, -31807);
+	    do Memory.poke(memAddress +288, -30751);
+	    do Memory.poke(memAddress +320, -29071);
+	    do Memory.poke(memAddress +352, -25543);
+	    do Memory.poke(memAddress +384, -18403);
+	    do Memory.poke(memAddress +416, -4081);
+	    do Memory.poke(memAddress +448, -8185);
+	    do Memory.poke(memAddress +480, -1);
+
+        return;
+    }
+}

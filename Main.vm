@@ -1,0 +1,485 @@
+function Main.main 2
+push constant 0
+pop local 1
+call Field.new 0
+pop static 0
+call Main.GenerateField 0
+pop temp 0
+push static 0
+call Field.draw 1
+pop temp 0
+label WHILE_EXP0
+push local 1
+not
+not
+if-goto WHILE_END0
+label WHILE_EXP1
+push local 0
+push constant 0
+eq
+not
+if-goto WHILE_END1
+call Keyboard.keyPressed 0
+pop local 0
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+push constant 87
+eq
+push local 0
+push constant 65
+eq
+or
+push local 0
+push constant 83
+eq
+or
+push local 0
+push constant 68
+eq
+or
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push static 0
+push local 0
+call Field.move 2
+pop temp 0
+label IF_FALSE0
+push local 0
+push constant 82
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push static 0
+call Field.clearField 1
+pop temp 0
+call Main.GenerateField 0
+pop temp 0
+push static 0
+call Field.draw 1
+pop temp 0
+label IF_FALSE1
+push local 0
+push constant 81
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+label IF_FALSE2
+push local 0
+push constant 140
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+not
+pop local 1
+label IF_FALSE3
+label WHILE_EXP2
+push local 0
+push constant 0
+eq
+not
+not
+if-goto WHILE_END2
+call Keyboard.keyPressed 0
+pop local 0
+goto WHILE_EXP2
+label WHILE_END2
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Main.GetScreenLocation 0
+push argument 1
+push constant 16
+call Math.multiply 2
+push constant 32
+call Math.multiply 2
+push argument 0
+add
+return
+function Main.GenerateField 0
+push static 0
+push constant 1
+push constant 4
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 2
+push constant 4
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 3
+push constant 4
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 4
+push constant 4
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 5
+push constant 4
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 6
+push constant 4
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 7
+push constant 4
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 8
+push constant 4
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 9
+push constant 4
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 9
+push constant 3
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 9
+push constant 2
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 10
+push constant 2
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 11
+push constant 2
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 12
+push constant 2
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 13
+push constant 2
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 14
+push constant 2
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 14
+push constant 3
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 14
+push constant 4
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 14
+push constant 5
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 14
+push constant 6
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 14
+push constant 7
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 14
+push constant 8
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 14
+push constant 9
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 14
+push constant 10
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 13
+push constant 10
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 12
+push constant 10
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 12
+push constant 9
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 11
+push constant 9
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 10
+push constant 9
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 10
+push constant 8
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 10
+push constant 7
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 9
+push constant 7
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 8
+push constant 7
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 8
+push constant 8
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 8
+push constant 9
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 8
+push constant 10
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 7
+push constant 10
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 6
+push constant 10
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 5
+push constant 10
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 4
+push constant 10
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 3
+push constant 10
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 2
+push constant 10
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 1
+push constant 10
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 1
+push constant 9
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 1
+push constant 8
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 1
+push constant 7
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 1
+push constant 6
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 1
+push constant 5
+push constant 1
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 4
+push constant 7
+push constant 2
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 5
+push constant 7
+push constant 2
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 6
+push constant 7
+push constant 2
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 7
+push constant 7
+push constant 2
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 6
+push constant 6
+push constant 2
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 6
+push constant 8
+push constant 2
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 13
+push constant 4
+push constant 2
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 2
+push constant 9
+push constant 3
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 11
+push constant 7
+push constant 4
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 12
+push constant 7
+push constant 4
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 13
+push constant 7
+push constant 4
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 11
+push constant 8
+push constant 4
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 12
+push constant 8
+push constant 4
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 13
+push constant 8
+push constant 4
+call Field.AddObject 4
+pop temp 0
+push static 0
+push constant 13
+push constant 9
+push constant 4
+call Field.AddObject 4
+pop temp 0
+push constant 0
+return

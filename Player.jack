@@ -1,0 +1,66 @@
+class Player{
+    field int x;
+    field int y;
+    
+    constructor Player new(int x1, int y1){
+        let x = x1;
+        let y = y1;
+
+        return this;
+    }
+
+	method int X() { return x; }
+	method int Y() { return y; }
+	method void setX(int newX) { let x = newX; return; }
+	method void setY(int newY) { let y = newY; return; }
+
+	method bool Xplus(int newX){
+		var boolean success;
+		let success = false;
+
+		if ((x + newX < 20) & (x + newX > -1)){
+			do setX(x + newX);
+			let success = true;
+		}
+		
+		return success;
+	}
+
+	method bool Yplus(int newY){
+		var boolean success;
+		let success = false;
+		
+		if ((y + newY < 15) & (y + newY > -1)){
+			do setY(y + newY);
+			let success = true;
+		}
+
+		return success;
+	}
+
+    method void draw() {
+	    var int memAddress;
+        var int location;
+        let location = Main.GetScreenLocation(x, y);
+	    let memAddress = 16384+location;
+
+        do Memory.poke(memAddress, 0);
+		do Memory.poke(memAddress +32, 0);
+		do Memory.poke(memAddress +64, 960);
+		do Memory.poke(memAddress +96, 576);
+		do Memory.poke(memAddress +128, 576);
+		do Memory.poke(memAddress +160, 2016);
+		do Memory.poke(memAddress +192, 1056);
+		do Memory.poke(memAddress +224, 1056);
+		do Memory.poke(memAddress +256, 1056);
+		do Memory.poke(memAddress +288, 1056);
+		do Memory.poke(memAddress +320, 2016);
+		do Memory.poke(memAddress +352, 576);
+		do Memory.poke(memAddress +384, 576);
+		do Memory.poke(memAddress +416, 3696);
+		do Memory.poke(memAddress +448, 0);
+		do Memory.poke(memAddress +480, 0);
+
+	    return;
+}
+}

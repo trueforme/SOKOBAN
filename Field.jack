@@ -1,0 +1,230 @@
+//0 - пусто
+//1 - стена
+//2 - блок
+//3 - челик
+//4 - куда надо поставить
+
+class Field {
+    field Array currentField;
+    field Player player;
+    field int prevBlock;
+    field int nextBlock1;
+    field boolean isNextBlockExpected;
+    field Array expectedBlocks;
+    field int expectedBlockCount;
+
+    constructor Field new(){
+        var int i;
+        let i = 0;
+        let player = Player.new(0, 0);
+        let currentField = Array.new(300); 
+        let isNextBlockExpected = false;
+        let expectedBlockCount = 0;
+        let expectedBlocks = Array.new(300);
+
+        while(i < 300){
+            let currentField[i] = 0;
+            let expectedBlocks[i] = -1;
+            let i = i + 1;
+        }
+        return this;
+    }
+
+    method void addExpectedBlock(int index) {
+        let expectedBlocks[expectedBlockCount] = index;
+        let expectedBlockCount = expectedBlockCount + 1;
+        return;
+    }
+    
+    method void clearExpectedBlock(int index) {
+        var int i;
+        let i = 0;
+        while (~(expectedBlocks[i] = index)) { let i = i + 1; }
+        while (i + 1 < expectedBlockCount) {
+            let expectedBlocks[i] = expectedBlocks[i+1];
+        }
+        let expectedBlocks[i] = -1;
+        let expectedBlockCount = expectedBlockCount + 1;
+        return;
+    }
+
+    method void checkExpectedBlocks(){
+        var int i;
+        let i = 0;
+        while(i < expectedBlockCount) {
+            if(currentField[expectedBlocks[i]] = 0) { let currentField[expectedBlocks[i]] = 4; }
+            let i = i + 1;
+        }
+        return;
+    }
+
+    method void AddObject(int x, int y, int typeObj){
+        let currentField[y*20 + x] = typeObj;
+        if (typeObj = 4) { do addExpectedBlock(y*20 + x); }
+        return;
+    }
+
+    method void clearBlock(int index){
+        var int memAddress;
+        var int location;
+        let location = Main.GetScreenLocation(index - (index/20*20), index/20);
+	    let memAddress = 16384+location;
+
+        if(currentField[index] = 4) { do clearExpectedBlock(index); }
+
+	    do Memory.poke(memAddress, 0);
+	    do Memory.poke(memAddress +32, 0);
+	    do Memory.poke(memAddress +64, 0);
+	    do Memory.poke(memAddress +96, 0);
+	    do Memory.poke(memAddress +128, 0);
+	    do Memory.poke(memAddress +160, 0);
+	    do Memory.poke(memAddress +192, 0);
+	    do Memory.poke(memAddress +224, 0);
+	    do Memory.poke(memAddress +256, 0);
+	    do Memory.poke(memAddress +288, 0);
+	    do Memory.poke(memAddress +320, 0);
+	    do Memory.poke(memAddress +352, 0);
+	    do Memory.poke(memAddress +384, 0);
+	    do Memory.poke(memAddress +416, 0);
+	    do Memory.poke(memAddress +448, 0);
+	    do Memory.poke(memAddress +480, 0);
+        return;
+    }
+
+    method boolean canMove(int x, int y, int direction){
+        var int blockIndex;
+        var int nextBlock;
+        var int nextBlockX;
+        var int nextBlockY;
+
+        let blockIndex = y * 20 + x;
+        let nextBlock = computeNextBlock(blockIndex, direction);
+        let nextBlockX = nextBlock - (nextBlock/20*20);
+        let nextBlockY = nextBlock/20;
+
+        if((currentField[blockIndex] = 1) | (x < 0) | (x > 19) | (y < 0) | (y > 14)) { return false; }
+
+        if ((currentField[blockIndex] = 2) & ((nextBlockX < 0) | (nextBlockX > 19) |
+            (nextBlockY > 14) | (nextBlockY < 0) | (currentField[nextBlock] = 1) |
+            (currentField[nextBlock] = 2) | (currentField[nextBlock] = 4)))
+            {
+                if(currentField[nextBlock] = 4) { let isNextBlockExpected = true; }
+                else { return false; }
+            }
+    
+        return true;
+    }
+    
+    method int computeNextBlock(int block, int direction){
+        var int nextBlock;
+        if (direction = 87) { let nextBlock = block - 20; }   // W
+        if (direction = 65) { let nextBlock = block - 1; }    // A
+        if (direction = 83) { let nextBlock = block + 20; }   // S
+        if (direction = 68) { let nextBlock = block + 1; }    // D
+        return nextBlock;
+    }
+
+    method void move(char direction){
+        var int currentX;
+        var int currentY;
+        var boolean success;
+
+        let currentX = player.X();
+        let currentY = player.Y();
+
+        if ((direction = 87) & canMove(currentX, currentY-1, direction)) { // W
+                let success = player.Yplus(-1);
+                let nextBlock1 = (player.Y() - 1) * 20 + player.X();
+            }
+
+        if ((direction = 65) & canMove(currentX-1, currentY, direction)) { // A
+                let success = player.Xplus(-1);
+                let nextBlock1 = player.Y() * 20 + player.X() - 1;
+            }
+
+        if ((direction = 83) & canMove(currentX, currentY+1, direction)) { // S
+                let success = player.Yplus(1);
+                let nextBlock1 = (player.Y() + 1) * 20 + player.X();
+            }
+
+        if ((direction = 68) & canMove(currentX+1, currentY, direction)) { // D
+                let success = player.Xplus(1);
+                let nextBlock1 = player.Y() * 20 + player.X() + 1;
+            }
+
+        if(success) {
+            let currentField[currentY * 20 + currentX] = prevBlock;
+
+            if (currentField[player.Y() * 20 + player.X()] = 2) {
+                let currentField[nextBlock1] = 2;
+                do redraw(nextBlock1);
+                let prevBlock = 0;
+
+                //if(isNextBlockExpected) {
+                //    let prevBlock = 4;
+                //    let isNextBlockExpected = false;
+                //    } else { let prevBlock = 0; }
+                
+            }
+            else { let prevBlock = currentField[player.Y() * 20 + player.X()]; }
+
+            let currentField[player.Y() * 20 + player.X()] = 3;
+
+            do redraw(currentY * 20 + currentX);
+            do redraw(player.Y() * 20 + player.X());
+        }
+        return;
+    }
+
+
+    method void draw(){
+        var int i;
+        let i = 0;
+        while(i < 300){
+            do redraw(i);
+            let i = i + 1;
+        }
+
+        return;
+    }
+
+    method void redraw(int i){
+            
+            if(currentField[i] = 0){
+                do clearBlock(i);
+                do checkExpectedBlocks();
+            }
+
+            if(currentField[i] = 1){
+                do Wall.draw(i - (i/20*20), i/20);
+            }
+
+            if(currentField[i] = 2){
+                do Box.draw(i - (i/20*20), i/20);
+            }
+
+            if(currentField[i] = 3){
+                do player.setX(i - (i/20*20));
+                do player.setY(i/20);
+                do player.draw();
+            }
+
+            if(currentField[i] = 4){
+                do ExpectedBox.draw(i - (i/20*20), i/20);
+            }
+        return;
+    }
+
+    method void clearField(){
+        var int index;
+        let prevBlock = 0;
+        let index = 0;
+
+        while (index < 300) {
+            let currentField[index] = 0;
+            do clearBlock(index);
+            let index = index + 1;
+        }
+        return;
+    }
+}

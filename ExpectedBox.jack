@@ -1,0 +1,20 @@
+class ExpectedBox {
+    function void draw(int x, int y){
+        var int memAddress;
+        var int location;
+        let location = Main.GetScreenLocation(x, y);
+	    let memAddress = 16384+location;
+
+	    do Memory.poke(memAddress, 4098);
+	    do Memory.poke(memAddress +32, 14343);
+	    do Memory.poke(memAddress +64, 5130);
+	    do Memory.poke(memAddress +96, 3612);
+	    do Memory.poke(memAddress +128, 1032);
+	    do Memory.poke(memAddress +288, 1032);
+	    do Memory.poke(memAddress +320, 3612);
+	    do Memory.poke(memAddress +352, 5130);
+	    do Memory.poke(memAddress +384, 14343);
+	    do Memory.poke(memAddress +416, 4098);
+        return;
+    }
+}
