@@ -1,5 +1,10 @@
+function Field.CanStep 0
+push argument 0
+pop pointer 0
+push this 9
+return
 function Field.new 1
-push constant 7
+push constant 10
 call Memory.alloc 1
 pop pointer 0
 push constant 0
@@ -18,6 +23,20 @@ pop this 6
 push constant 300
 call Array.new 1
 pop this 5
+push constant 1
+neg
+push constant 1
+neg
+push constant 1
+neg
+push constant 1
+neg
+push constant 1
+neg
+call PrevStep.new 5
+pop this 7
+push constant 0
+pop this 8
 label WHILE_EXP0
 push local 0
 push constant 300
@@ -65,6 +84,15 @@ push constant 1
 add
 pop this 6
 push constant 0
+return
+function Field.CurrentField 0
+push argument 0
+pop pointer 0
+push argument 1
+push this 0
+add
+pop pointer 1
+push that 0
 return
 function Field.clearExpectedBlock 1
 push argument 0
@@ -511,7 +539,240 @@ pop local 0
 label IF_FALSE3
 push local 0
 return
-function Field.move 3
+function Field.moveBack 5
+push argument 0
+pop pointer 0
+push this 8
+push constant 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 7
+call PrevStep.Direction 1
+pop local 2
+push this 7
+call PrevStep.X 1
+pop local 0
+push this 7
+call PrevStep.Y 1
+pop local 1
+push local 2
+push constant 87
+eq
+push pointer 0
+push local 0
+push local 1
+push constant 1
+sub
+push local 2
+call Field.canMove 4
+and
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 1
+push constant 1
+neg
+call Player.Yplus 2
+pop local 4
+push this 1
+call Player.Y 1
+push constant 1
+sub
+push constant 20
+call Math.multiply 2
+push this 1
+call Player.X 1
+add
+pop this 3
+label IF_FALSE1
+push local 2
+push constant 65
+eq
+push pointer 0
+push local 0
+push constant 1
+sub
+push local 1
+push local 2
+call Field.canMove 4
+and
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 1
+push constant 1
+neg
+call Player.Xplus 2
+pop local 4
+push this 1
+call Player.Y 1
+push constant 20
+call Math.multiply 2
+push this 1
+call Player.X 1
+add
+push constant 1
+sub
+pop this 3
+label IF_FALSE2
+push local 2
+push constant 83
+eq
+push pointer 0
+push local 0
+push local 1
+push constant 1
+add
+push local 2
+call Field.canMove 4
+and
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 1
+push constant 1
+call Player.Yplus 2
+pop local 4
+push this 1
+call Player.Y 1
+push constant 1
+add
+push constant 20
+call Math.multiply 2
+push this 1
+call Player.X 1
+add
+pop this 3
+label IF_FALSE3
+push local 2
+push constant 68
+eq
+push pointer 0
+push local 0
+push constant 1
+add
+push local 1
+push local 2
+call Field.canMove 4
+and
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push this 1
+push constant 1
+call Player.Xplus 2
+pop local 4
+push this 1
+call Player.Y 1
+push constant 20
+call Math.multiply 2
+push this 1
+call Player.X 1
+add
+push constant 1
+add
+pop this 3
+label IF_FALSE4
+push local 4
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push local 1
+push constant 20
+call Math.multiply 2
+push local 0
+add
+push this 0
+add
+push this 7
+call PrevStep.PrevBlock 1
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 7
+call PrevStep.PrevBox 1
+push this 0
+add
+pop pointer 1
+push that 0
+push constant 2
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push this 7
+call PrevStep.PrevBox 1
+push this 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push pointer 0
+push this 7
+call PrevStep.PrevBox 1
+call Field.redraw 2
+pop temp 0
+push constant 0
+pop this 2
+goto IF_END6
+label IF_FALSE6
+push this 1
+call Player.Y 1
+push constant 20
+call Math.multiply 2
+push this 1
+call Player.X 1
+add
+push this 0
+add
+pop pointer 1
+push that 0
+pop this 2
+label IF_END6
+push this 1
+call Player.Y 1
+push constant 20
+call Math.multiply 2
+push this 1
+call Player.X 1
+add
+push this 0
+add
+push constant 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push pointer 0
+push local 1
+push constant 20
+call Math.multiply 2
+push local 0
+add
+call Field.redraw 2
+pop temp 0
+push pointer 0
+push this 1
+call Player.Y 1
+push constant 20
+call Math.multiply 2
+push this 1
+call Player.X 1
+add
+call Field.redraw 2
+pop temp 0
+push constant 0
+pop this 8
+label IF_FALSE5
+label IF_FALSE0
+push constant 0
+return
+function Field.move 5
 push argument 0
 pop pointer 0
 push this 1
@@ -538,7 +799,7 @@ push this 1
 push constant 1
 neg
 call Player.Yplus 2
-pop local 2
+pop local 4
 push this 1
 call Player.Y 1
 push constant 1
@@ -549,6 +810,8 @@ push this 1
 call Player.X 1
 add
 pop this 3
+push constant 83
+pop local 2
 label IF_FALSE0
 push argument 1
 push constant 65
@@ -568,7 +831,7 @@ push this 1
 push constant 1
 neg
 call Player.Xplus 2
-pop local 2
+pop local 4
 push this 1
 call Player.Y 1
 push constant 20
@@ -579,6 +842,8 @@ add
 push constant 1
 sub
 pop this 3
+push constant 68
+pop local 2
 label IF_FALSE1
 push argument 1
 push constant 83
@@ -597,7 +862,7 @@ label IF_TRUE2
 push this 1
 push constant 1
 call Player.Yplus 2
-pop local 2
+pop local 4
 push this 1
 call Player.Y 1
 push constant 1
@@ -608,6 +873,8 @@ push this 1
 call Player.X 1
 add
 pop this 3
+push constant 87
+pop local 2
 label IF_FALSE2
 push argument 1
 push constant 68
@@ -626,7 +893,7 @@ label IF_TRUE3
 push this 1
 push constant 1
 call Player.Xplus 2
-pop local 2
+pop local 4
 push this 1
 call Player.Y 1
 push constant 20
@@ -637,8 +904,12 @@ add
 push constant 1
 add
 pop this 3
+push constant 65
+pop local 2
 label IF_FALSE3
-push local 2
+push constant 0
+pop this 9
+push local 4
 if-goto IF_TRUE4
 goto IF_FALSE4
 label IF_TRUE4
@@ -654,6 +925,9 @@ pop temp 0
 pop pointer 1
 push temp 0
 pop that 0
+push constant 0
+not
+pop this 9
 push this 1
 call Player.Y 1
 push constant 20
@@ -684,6 +958,15 @@ call Field.redraw 2
 pop temp 0
 push constant 0
 pop this 2
+push this 1
+call Player.X 1
+push this 1
+call Player.Y 1
+push this 3
+push constant 2
+push local 2
+call PrevStep.new 5
+pop this 7
 goto IF_END5
 label IF_FALSE5
 push this 1
@@ -698,6 +981,15 @@ add
 pop pointer 1
 push that 0
 pop this 2
+push this 1
+call Player.X 1
+push this 1
+call Player.Y 1
+push constant 0
+push constant 0
+push local 2
+call PrevStep.new 5
+pop this 7
 label IF_END5
 push this 1
 call Player.Y 1
@@ -731,6 +1023,8 @@ call Player.X 1
 add
 call Field.redraw 2
 pop temp 0
+push constant 1
+pop this 8
 label IF_FALSE4
 push constant 0
 return
@@ -886,6 +1180,8 @@ push constant 0
 pop this 2
 push constant 0
 pop local 0
+push constant 0
+pop this 8
 label WHILE_EXP0
 push local 0
 push constant 300

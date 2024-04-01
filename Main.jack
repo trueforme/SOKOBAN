@@ -1,28 +1,77 @@
 class Main {
     static Field myField;
-    
+
     function void main () {
         var char key;
+        var bool flag;
+        var int stepCount;
         var boolean exit;
+        var boolean start;
         let exit = false;
+        let start = false;
+        let stepCount = 0;
+        let flag = false;
         let myField = Field.new();
 
-        do Main.GenerateField();
-        do myField.draw();
+        do Intro.draw();
+
+        while ((~start) & (~exit)){
+            while(key = 0) { let key = Keyboard.keyPressed(); }
+            if(key = 140) { let exit = true; } // ESC
+            if(key = 80) { let start = true; } // P
+            while(~(key=0)) { let key = Keyboard.keyPressed(); }
+        }
+        
+        if (~exit){
+            do Screen.clearScreen();
+            do Main.GenerateField();
+            do myField.draw();
+            do Interface.draw();
+        }
 
         while(~exit){
-
             while(key = 0) { let key = Keyboard.keyPressed(); }
 
-            if((key = 87) | (key = 65) | (key = 83) | (key = 68)) { do myField.move(key); } // WASD
+            if((key = 87) | (key = 65) | (key = 83) | (key = 68)) {
+                do myField.move(key); 
+                let flag = true;
+                if ((myField.CanStep())) {
+                    let stepCount = stepCount + 1;
+                }
+                do Output.moveCursor(22, 13);
+                do Output.printInt(stepCount);
+                if (stepCount = 52) {
+                    do Output.moveCursor(22, 18);
+                    do Output.printString("YEEEI");
+                }
+                if((myField.CurrentField(151) = 2) & (myField.CurrentField(152) = 2) & (myField.CurrentField(153) = 2) & 
+                (myField.CurrentField(171) = 2) & (myField.CurrentField(172) = 2) & (myField.CurrentField(173) = 2) &
+                 (myField.CurrentField(193) = 2)) {
+                    do Screen.clearScreen();
+                    do Outro.draw();
+                    let exit = true;
+                }
+            } // WASD
             if(key = 82){ // R
                 do myField.clearField();
                 do Main.GenerateField();
                 do myField.draw();
+                let stepCount = 0;
+                do Screen.setColor(false);
+                do Screen.drawRectangle(96, 240, 200, 255);
+                do Output.moveCursor(22, 13);
+                do Output.printInt(stepCount);
             }
-            if(key = 81){ } // TODO: Q
+            if(key = 81){ // Q
+                do myField.moveBack();
+                if ((stepCount > 0) & (flag)) {
+                    let stepCount = stepCount - 1;
+                    let flag = false;
+                    do Output.moveCursor(22, 13);
+                    do Output.printInt(stepCount);
+                }
+            } 
             if(key = 140) { let exit = true; } // ESC
-            
             while(~(key=0)) { let key = Keyboard.keyPressed(); }
         }
         

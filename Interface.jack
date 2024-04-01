@@ -1,0 +1,17 @@
+class Interface {
+    function void draw() {
+        do Output.moveCursor(0, 40);
+        do Output.printString("SOKOBANCHIK");
+        do Output.moveCursor(4, 40);
+        do Output.printString("WASD - MOVE");
+        do Output.moveCursor(6, 40);
+        do Output.printString("R - RESET");
+        do Output.moveCursor(8, 40);
+        do Output.printString("Q - CANCEL LAST STEP");
+        do Output.moveCursor(10, 40);
+        do Output.printString("ESC - EXIT");
+        do Output.moveCursor(22, 0);
+        do Output.printString("STEP COUNT: ");
+	    return;
+    }
+}

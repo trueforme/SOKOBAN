@@ -1,0 +1,20 @@
+class PrevStep {
+    field int x;
+    field int y;
+    field int prevBox;
+    field int direction;
+    field int prevBlock;
+    constructor PrevStep new(int newX, int newY, int preBox, int newPrevBlock, int newDirection) {
+        let x = newX;
+        let y = newY;
+        let prevBox = preBox;
+        let direction = newDirection;
+        let prevBlock = newPrevBlock;
+        return this;
+    }
+    method int X() { return x; }
+	method int Y() { return y; }
+    method int PrevBlock() { return prevBlock; }
+    method int Direction() { return direction; }
+    method int PrevBox() { return prevBox; }
+}

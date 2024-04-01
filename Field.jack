@@ -12,6 +12,10 @@ class Field {
     field boolean isNextBlockExpected;
     field Array expectedBlocks;
     field int expectedBlockCount;
+    field PrevStep lastStep;
+    field int numberStep;
+    field bool canStep;
+    method int CanStep() { return canStep; }
 
     constructor Field new(){
         var int i;
@@ -21,6 +25,8 @@ class Field {
         let isNextBlockExpected = false;
         let expectedBlockCount = 0;
         let expectedBlocks = Array.new(300);
+        let lastStep = PrevStep.new(-1, -1, -1, -1, -1);
+        let numberStep = 0;
 
         while(i < 300){
             let currentField[i] = 0;
@@ -35,6 +41,8 @@ class Field {
         let expectedBlockCount = expectedBlockCount + 1;
         return;
     }
+
+    method int CurrentField(int a) { return currentField[a]; }
     
     method void clearExpectedBlock(int index) {
         var int i;
@@ -124,13 +132,17 @@ class Field {
         return nextBlock;
     }
 
-    method void move(char direction){
+    method void moveBack(){
         var int currentX;
         var int currentY;
+        var int direction;
+        var int moveBlok;
         var boolean success;
+        if (numberStep = 1){
 
-        let currentX = player.X();
-        let currentY = player.Y();
+        let direction = lastStep.Direction();
+        let currentX = lastStep.X();
+        let currentY = lastStep.Y();
 
         if ((direction = 87) & canMove(currentX, currentY-1, direction)) { // W
                 let success = player.Yplus(-1);
@@ -153,25 +165,76 @@ class Field {
             }
 
         if(success) {
+            let currentField[currentY * 20 + currentX] = lastStep.PrevBlock();
+
+            if (currentField[lastStep.PrevBox()] = 2) {
+                let currentField[lastStep.PrevBox()] = 0;
+                do redraw(lastStep.PrevBox());
+                let prevBlock = 0;
+            }
+            else { let prevBlock = currentField[player.Y() * 20 + player.X()]; }
+            let currentField[player.Y() * 20 + player.X()] = 3;
+            do redraw(currentY * 20 + currentX);
+            do redraw(player.Y() * 20 + player.X());
+            let numberStep = 0;
+            }
+        }
+        return;
+    }
+
+    method void move(char direction){
+        var int currentX;
+        var int currentY;
+        var int dir;
+        var int moveBlok;
+        var boolean success;
+
+        let currentX = player.X();
+        let currentY = player.Y();
+
+        if ((direction = 87) & canMove(currentX, currentY-1, direction)) { // W
+                let success = player.Yplus(-1);
+                let nextBlock1 = (player.Y() - 1) * 20 + player.X();
+                let dir = 83;
+            }
+
+        if ((direction = 65) & canMove(currentX-1, currentY, direction)) { // A
+                let success = player.Xplus(-1);
+                let nextBlock1 = player.Y() * 20 + player.X() - 1;
+                let dir = 68;
+            }
+
+        if ((direction = 83) & canMove(currentX, currentY+1, direction)) { // S
+                let success = player.Yplus(1);
+                let nextBlock1 = (player.Y() + 1) * 20 + player.X();
+                let dir = 87;
+            }
+
+        if ((direction = 68) & canMove(currentX+1, currentY, direction)) { // D
+                let success = player.Xplus(1);
+                let nextBlock1 = player.Y() * 20 + player.X() + 1;
+                let dir = 65;
+            }
+        let canStep = false;
+        if(success) {
             let currentField[currentY * 20 + currentX] = prevBlock;
+            let canStep = true;
 
             if (currentField[player.Y() * 20 + player.X()] = 2) {
                 let currentField[nextBlock1] = 2;
                 do redraw(nextBlock1);
-                let prevBlock = 0;
-
-                //if(isNextBlockExpected) {
-                //    let prevBlock = 4;
-                //    let isNextBlockExpected = false;
-                //    } else { let prevBlock = 0; }
-                
+                let prevBlock = 0;  
+                let lastStep = PrevStep.new(player.X(), player.Y(), nextBlock1, 2, dir);
             }
-            else { let prevBlock = currentField[player.Y() * 20 + player.X()]; }
+            else { 
+                let prevBlock = currentField[player.Y() * 20 + player.X()];
+                let lastStep = PrevStep.new(player.X(), player.Y(), 0, 0, dir);
+            }
 
             let currentField[player.Y() * 20 + player.X()] = 3;
-
             do redraw(currentY * 20 + currentX);
             do redraw(player.Y() * 20 + player.X());
+            let numberStep = 1;
         }
         return;
     }
@@ -219,6 +282,7 @@ class Field {
         var int index;
         let prevBlock = 0;
         let index = 0;
+        let numberStep = 0;
 
         while (index < 300) {
             let currentField[index] = 0;

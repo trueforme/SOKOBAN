@@ -5,16 +5,21 @@ class ExpectedBox {
         let location = Main.GetScreenLocation(x, y);
 	    let memAddress = 16384+location;
 
-	    do Memory.poke(memAddress, 4098);
-	    do Memory.poke(memAddress +32, 14343);
-	    do Memory.poke(memAddress +64, 5130);
-	    do Memory.poke(memAddress +96, 3612);
-	    do Memory.poke(memAddress +128, 1032);
-	    do Memory.poke(memAddress +288, 1032);
-	    do Memory.poke(memAddress +320, 3612);
-	    do Memory.poke(memAddress +352, 5130);
-	    do Memory.poke(memAddress +384, 14343);
-	    do Memory.poke(memAddress +416, 4098);
+	    do Memory.poke(memAddress, 0);
+		do Memory.poke(memAddress +32, 8196);
+		do Memory.poke(memAddress +64, 28686);
+		do Memory.poke(memAddress +96, 10260);
+		do Memory.poke(memAddress +128, 7224);
+		do Memory.poke(memAddress +160, 2064);
+		do Memory.poke(memAddress +192, 0);
+		do Memory.poke(memAddress +224, 0);
+		do Memory.poke(memAddress +256, 0);
+		do Memory.poke(memAddress +288, 0);
+		do Memory.poke(memAddress +320, 2064);
+		do Memory.poke(memAddress +352, 7224);
+		do Memory.poke(memAddress +384, 10260);
+		do Memory.poke(memAddress +416, 28686);
+		do Memory.poke(memAddress +448, 8196);
         return;
     }
 }
